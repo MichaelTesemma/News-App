@@ -1,0 +1,7 @@
+use {database name}: to use or create a database
+show collections: to show all the colecction in database
+show dbs: to show databases in the system
+db.create collection: to create a collection after use {database name}
+db.{database name}.insert: to insert to the collection
+db.{collection name}.find: to find  an insertion 
+db.{collection name}.find().pretty(): to clean up .finds returned files

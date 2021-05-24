@@ -1,24 +1,16 @@
-const http = require("http")
-const fs = require("fs")
-const json = fs.readFileSync("./db.json")
+const express = require('express')
+const articles = require('./backend/routes/api/articles')
 
-const server = http.createServer((req, res)=> {
-    if(req.url==="/articles"){
-        res.writeHead(200, {'Content-type' : 'application/json'})
-        res.end(json)
+const app = express()
 
-    }else if(req.url==="/users"){
-        res.writeHead(200,{'Content-type':'application/json'})
-
-        const st = JSON.stringify({
-            name:"Michael",
-            cars:["Ford", "Nissan"]
-        })
-        res.end(st)       
-    }
-    else{
-        res.writeHead(404)
-        res.end()
+const found = null
+app.get(('/articles/:id'), (req, res) => {
+    isThere = articles.some(found => found.id == req.params.id)
+    if (isThere){
+        res.json(articles.filter(found => found.id == req.params.id))
+    }else{
+        res.status(400).json({msg: 'bad request/ article not found'})
     }
 })
-server.listen(5000, console.log("Server running on Port 5000"))
+
+app.listen(3001, console.log('Server running'))
