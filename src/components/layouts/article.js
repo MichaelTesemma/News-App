@@ -1,29 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
-export default class Article extends React.Component{
-    state={
-        article:[]
-    }
-    componentDidMount(){
+const Article = () => {
+
+    const [articles, setArticles] = useState([])
+    useEffect(() => {
         axios.get(`http://localhost:3001/articles/${window.location.pathname.slice(9)}`)
         .then(res => {
-            this.setState({article: [res.data]})
+            setArticles(res.data)
         })
-    }
+    },[])
+    console.log(articles)
 
-    render(){
-     const read = Object.keys(this.state.article).map(item => {
-         return(
-             <div>
-                 <h1>{item.title}</h1>
-                 {console.log(item.title)}
-             </div>
-         )
-     })
-     console.log(read)
-        return(
-            <div>{read}</div>
-        )
-    }
+    return(
+        <div>
+            <h1>{articles.title}</h1>
+            <p>{articles.body}</p>
+        </div>
+    )
 }
+
+export default Article
